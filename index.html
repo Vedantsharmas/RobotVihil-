@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robot Assistant Cybernetic Console</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Outfit"', 'sans-serif'],
+                        mono: ['"JetBrains Mono"', 'monospace'],
+                    },
+                    colors: {
+                        panel: {
+                            bg: '#030712',
+                            card: '#0a0f1e',
+                            border: 'rgba(255, 255, 255, 0.05)',
+                            champagne: '#e5b88a', /* Sand Gold Accent */
+                            sage: '#10b981', /* Emerald Accent */
+                            lavender: '#a855f7', /* Purple Accent */
+                            cyan: '#06b6d4' /* Cyan Accent */
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #030712;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(6, 182, 212, 0.04) 0px, transparent 40%),
+                radial-gradient(at 90% 90%, rgba(217, 119, 6, 0.03) 0px, transparent 40%),
+                radial-gradient(at 50% 50%, rgba(168, 85, 247, 0.02) 0px, transparent 60%);
+        }
+        
+        /* Glassmorphic Cyber Panels */
+        .hud-panel {
+            position: relative;
+            background: rgba(10, 15, 30, 0.45);
+            backdrop-filter: blur(20px) saturate(160%);
+            -webkit-backdrop-filter: blur(20px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        
+        .hud-panel:hover {
+            border-color: rgba(6, 182, 212, 0.2);
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.05), 0 5px 15px rgba(0, 0, 0, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* Tech Corner Brackets */
+        .cyber-corners::before,
+        .cyber-corners::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-color: rgba(6, 182, 212, 0.4);
+            border-style: solid;
+            pointer-events: none;
+            transition: border-color 0.4s ease;
+        }
+        .cyber-corners::before {
+            top: -1px;
+            left: -1px;
+            border-width: 2px 0 0 2px;
+            border-top-left-radius: 1.5rem;
+        }
+        .cyber-corners::after {
+            bottom: -1px;
+            right: -1px;
+            border-width: 0 2px 2px 0;
+            border-bottom-right-radius: 1.5rem;
+        }
+        .hud-panel:hover .cyber-corners::before,
+        .hud-panel:hover .cyber-corners::after {
+            border-color: rgba(6, 182, 212, 0.8);
+        }
+
+        /* Champagne Accent Theme */
+        .hud-panel-champagne {
+            border-color: rgba(229, 184, 138, 0.08);
+        }
+        .hud-panel-champagne:hover {
+            border-color: rgba(229, 184, 138, 0.25);
+            box-shadow: 0 10px 40px rgba(229, 184, 138, 0.04), 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        .hud-panel-champagne .cyber-corners::before,
+        .hud-panel-champagne .cyber-corners::after {
+            border-color: rgba(229, 184, 138, 0.35);
+        }
+        .hud-panel-champagne:hover .cyber-corners::before,
+        .hud-panel-champagne:hover .cyber-corners::after {
+            border-color: rgba(229, 184, 138, 0.85);
+        }
+
+        /* Lavender Accent Theme */
+        .hud-panel-lavender {
+            border-color: rgba(168, 85, 247, 0.08);
+        }
+        .hud-panel-lavender:hover {
+            border-color: rgba(168, 85, 247, 0.25);
+            box-shadow: 0 10px 40px rgba(168, 85, 247, 0.04), 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        .hud-panel-lavender .cyber-corners::before,
+        .hud-panel-lavender .cyber-corners::after {
+            border-color: rgba(168, 85, 247, 0.35);
+        }
+        .hud-panel-lavender:hover .cyber-corners::before,
+        .hud-panel-lavender:hover .cyber-corners::after {
+            border-color: rgba(168, 85, 247, 0.85);
+        }
+
+        /* Sage Accent Theme */
+        .hud-panel-sage {
+            border-color: rgba(16, 185, 129, 0.08);
+        }
+        .hud-panel-sage:hover {
+            border-color: rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 40px rgba(16, 185, 129, 0.04), 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+        .hud-panel-sage .cyber-corners::before,
+        .hud-panel-sage .cyber-corners::after {
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+        .hud-panel-sage:hover .cyber-corners::before,
+        .hud-panel-sage:hover .cyber-corners::after {
+            border-color: rgba(16, 185, 129, 0.85);
+        }
+
+        /* Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 99px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(6, 182, 212, 0.25);
+        }
+
+        /* Keyframe animations */
+        @keyframes scanline-laser {
+            0% { top: 0%; opacity: 0.8; }
+            50% { opacity: 0.3; }
+            100% { top: 100%; opacity: 0.8; }
+        }
+        
+        .laser-sweep {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, rgba(6, 182, 212, 0.6) 20%, rgba(6, 182, 212, 0.8) 50%, rgba(6, 182, 212, 0.6) 80%, transparent);
+            box-shadow: 0 0 10px rgba(6, 182, 212, 0.8);
+            pointer-events: none;
+            z-index: 10;
+            animation: scanline-laser 6s ease-in-out infinite;
+        }
+
+        .chat-bubble-animate {
+            opacity: 0;
+            transform: translateY(12px) scale(0.98);
+            animation: bubbleIntro 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes bubbleIntro {
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Matrix scan backdrop effect */
+        .hud-grid-overlay {
+            background-size: 30px 30px;
+            background-image: 
+                linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+        }
+    </style>
+</head>
+<body class="text-slate-300 font-sans h-screen flex flex-col overflow-hidden antialiased select-none hud-grid-overlay">
+
+    <!-- Interactive Particle Background Canvas -->
+    <canvas id="nexus-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- Header Navigation -->
+    <header class="h-16 border-b border-white/5 bg-panel-bg/75 flex items-center justify-between px-6 shrink-0 z-20 backdrop-blur-md">
+        <div class="flex items-center gap-4">
+            <div class="relative h-10 w-10 rounded-2xl bg-gradient-to-tr from-panel-cyan via-panel-lavender to-panel-champagne flex items-center justify-center shadow-lg shadow-panel-cyan/15 group overflow-hidden">
+                <div class="absolute inset-0 bg-black/10 group-hover:opacity-0 transition-opacity duration-300"></div>
+                <i class="fa-solid fa-brain text-md text-[#030712] z-10 animate-pulse"></i>
+            </div>
+            <div>
+                <h1 class="text-sm font-semibold tracking-wider text-slate-100 flex items-center gap-2">
+                    ROBOT TELEMETRY CONSOLE
+                </h1>
+                <p class="text-[10px] text-panel-cyan/60 font-medium tracking-widest uppercase font-mono">Cognitive Neural Core</p>
+            </div>
+        </div>
+        
+        <!-- Live System Metric Tickers -->
+        <div class="hidden lg:flex items-center gap-6 px-5 py-1.5 bg-white/5 border border-white/5 rounded-2xl font-mono text-[9px] text-slate-400">
+            <div class="flex items-center gap-1.5">
+                <span class="text-slate-500">CPU LOAD:</span>
+                <span id="metric-cpu" class="text-panel-cyan font-bold min-w-[26px]">38%</span>
+            </div>
+            <div class="h-2 w-[1px] bg-white/10"></div>
+            <div class="flex items-center gap-1.5">
+                <span class="text-slate-500">CORE TEMP:</span>
+                <span id="metric-temp" class="text-panel-champagne font-bold min-w-[34px]">42.5°C</span>
+            </div>
+            <div class="h-2 w-[1px] bg-white/10"></div>
+            <div class="flex items-center gap-1.5">
+                <span class="text-slate-500">RAM UTIL:</span>
+                <span id="metric-ram" class="text-panel-lavender font-bold min-w-[30px]">138MB</span>
+            </div>
+        </div>
+
+        <!-- Live Status Badges & voice visualizer -->
+        <div class="flex items-center gap-3.5 z-10">
+            
+            <!-- Dynamic Siri/Gemini Voice Wave Canvas -->
+            <div id="voice-visualizer" class="items-center h-8 px-3 border border-panel-cyan/20 bg-panel-cyan/5 rounded-2xl gap-2 hidden">
+                <span class="text-[8px] font-mono text-panel-cyan uppercase tracking-widest animate-pulse font-semibold">Broadcasting</span>
+                <canvas id="voice-wave" width="120" height="32" class="w-[120px] h-8"></canvas>
+            </div>
+
+            <!-- Status pills -->
+            <div id="cam-badge" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-white/5 border border-white/5 text-slate-400 transition-all duration-300">
+                <span id="cam-dot" class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
+                <span id="cam-text" class="font-mono">Camera Offline</span>
+            </div>
+            
+            <div id="mic-badge" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-white/5 border border-white/5 text-slate-400 transition-all duration-300">
+                <span id="mic-dot" class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
+                <span id="mic-text" class="font-mono">Mic Offline</span>
+            </div>
+            
+            <div id="action-badge" class="flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-white/5 border border-white/5 text-slate-400 transition-all duration-300">
+                <span id="action-dot" class="h-1.5 w-1.5 rounded-full bg-slate-500"></span>
+                <span id="action-text" class="font-mono">Action: Neutral</span>
+            </div>
+
+            <div class="h-4 w-[1px] bg-white/10 mx-0.5"></div>
+            
+            <div id="current-time" class="text-xs text-panel-champagne font-semibold tracking-wider min-w-[60px] text-right font-mono">00:00:00</div>
+        </div>
+    </header>
+
+    <!-- Main Workspace Grid -->
+    <main class="flex-1 flex overflow-hidden p-5 gap-5 min-h-0 z-10">
+        
+        <!-- Left Column: Video Feed & User Panels -->
+        <section class="w-[45%] flex flex-col gap-5 h-full">
+            <!-- Camera Vision Panel -->
+            <div class="flex-1 hud-panel rounded-3xl p-4 flex flex-col relative overflow-hidden group">
+                <div class="cyber-corners"></div>
+                
+                <div class="flex items-center justify-between mb-3 border-b border-white/5 pb-2.5 z-10">
+                    <h2 class="text-xs font-semibold text-slate-200 flex items-center gap-2 uppercase tracking-wider font-mono">
+                        <i class="fa-solid fa-camera text-panel-cyan animate-pulse"></i> Raw Optical Stream
+                    </h2>
+                    <span id="vision-mode-badge" class="text-[9px] font-semibold text-panel-cyan bg-panel-cyan/10 border border-panel-cyan/20 px-2.5 py-0.5 rounded-full uppercase tracking-wider hidden font-mono">
+                        Single Tracker
+                    </span>
+                </div>
+                
+                <!-- Camera Container -->
+                <div class="flex-1 rounded-2xl bg-[#03060f] border border-white/5 relative overflow-hidden flex items-center justify-center">
+                    <img id="video-stream" src="/video_feed" alt="Robot Vision Feed" class="w-full h-full object-cover rounded-2xl" onerror="handleStreamError()">
+                    
+                    <div id="scanner-line" class="laser-sweep"></div>
+                    
+                    <!-- HUD Overlays -->
+                    <div class="absolute inset-0 pointer-events-none z-10 rounded-2xl border border-panel-cyan/5">
+                        <!-- Crosshair bracket styles -->
+                        <div class="absolute top-4 left-4 w-4 h-4 border-t-2 border-l-2 border-panel-cyan/40"></div>
+                        <div class="absolute top-4 right-4 w-4 h-4 border-t-2 border-r-2 border-panel-cyan/40"></div>
+                        <div class="absolute bottom-4 left-4 w-4 h-4 border-b-2 border-l-2 border-panel-cyan/40"></div>
+                        <div class="absolute bottom-4 right-4 w-4 h-4 border-b-2 border-r-2 border-panel-cyan/40"></div>
+                    </div>
+
+                    <!-- Live feed indicator tag -->
+                    <div class="absolute top-4 left-4 bg-black/85 backdrop-blur-md px-2.5 py-1 border border-white/5 rounded-lg flex items-center gap-2 z-10 text-[9px] font-bold text-panel-cyan select-none font-mono">
+                        <span class="h-1.5 w-1.5 rounded-full bg-panel-cyan animate-ping"></span>
+                        <span class="tracking-widest">FEED_STREAM</span>
+                    </div>
+
+                    <!-- Dynamic HUD overlays -->
+                    <div class="absolute bottom-4 right-4 bg-black/80 backdrop-blur-md border border-white/5 rounded-xl p-3 text-[9px] font-mono text-panel-cyan select-none flex flex-col gap-1 z-15 min-w-[140px] shadow-lg">
+                        <div class="flex justify-between gap-3">
+                            <span class="text-slate-500">STREAM:</span>
+                            <span id="telemetry-fps">640x480 @ 30 FPS</span>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <span class="text-slate-500">LATENCY:</span>
+                            <span id="telemetry-latency">50ms</span>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <span class="text-slate-500">EXPR:</span>
+                            <span id="telemetry-mood" class="text-panel-champagne font-semibold">Neutral</span>
+                        </div>
+                        <div class="flex justify-between gap-3">
+                            <span class="text-slate-500">ACT:</span>
+                            <span id="telemetry-action" class="text-panel-lavender font-semibold">Neutral</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Camera Disconnected Screen -->
+                    <div id="cam-placeholder" class="absolute inset-0 bg-[#03050c]/98 flex flex-col items-center justify-center gap-3.5 z-20">
+                        <div class="h-12 w-12 rounded-full bg-red-500/5 flex items-center justify-center border border-red-500/20 text-red-400 text-md shadow-lg shadow-red-500/5 animate-pulse">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <div class="text-center">
+                            <p class="text-xs font-semibold text-slate-300 font-mono tracking-wider">HARDWARE DISCONNECTED</p>
+                            <p class="text-[9px] text-red-400/80 mt-1 font-mono uppercase tracking-widest">Webcam input stream unavailable</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Directory & Action Training Panel -->
+            <div class="h-44 flex gap-5 shrink-0">
+                <!-- Face Recognition Directory -->
+                <div class="w-1/2 hud-panel hud-panel-champagne rounded-3xl p-4 flex flex-col overflow-hidden">
+                    <div class="cyber-corners"></div>
+                    <h2 class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-2 mb-1 font-mono">
+                        <i class="fa-solid fa-users text-panel-champagne animate-pulse"></i> User Index
+                    </h2>
+                    <p class="text-[9px] text-slate-500 font-mono mb-2">Select identity to trigger greeting</p>
+                    <div class="flex-1 overflow-y-auto pr-1">
+                        <div id="users-grid" class="flex flex-col gap-1.5">
+                            <!-- Populated Dynamically -->
+                            <div class="text-[10px] text-slate-500 text-center py-4 font-mono">Accessing database...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Train Action Model -->
+                <div class="w-1/2 hud-panel hud-panel-sage rounded-3xl p-4 flex flex-col justify-between">
+                    <div class="cyber-corners"></div>
+                    <div class="flex flex-col">
+                        <h2 class="text-xs font-semibold text-slate-200 uppercase tracking-wider flex items-center gap-2 mb-1 font-mono">
+                            <i class="fa-solid fa-dumbbell text-panel-sage"></i> Activity Tuning
+                        </h2>
+                        <p class="text-[9px] text-slate-500 font-mono mb-2">Train the neural visual classifiers</p>
+                    </div>
+                    
+                    <div class="flex-1 flex flex-col gap-2.5 justify-end">
+                        <div class="flex gap-2">
+                            <select id="train-action-select" class="flex-1 bg-[#060a15] border border-white/5 rounded-xl px-3 py-1.5 text-[11px] text-slate-300 font-mono focus:outline-none focus:border-panel-sage/40 transition-colors">
+                                <option value="Eating">Eating</option>
+                                <option value="Singing">Singing</option>
+                                <option value="Walking">Walking</option>
+                                <option value="Coding/Typing">Coding/Typing</option>
+                            </select>
+                            <button id="train-action-btn" onclick="startActionTraining()" class="bg-panel-sage/10 hover:bg-panel-sage/20 text-panel-sage border border-panel-sage/30 text-xs px-3.5 py-1.5 rounded-xl transition-all duration-300 font-semibold uppercase tracking-wider font-mono">
+                                Train
+                            </button>
+                        </div>
+                        
+                        <!-- Training progress bar -->
+                        <div id="training-progress-container" class="hidden mt-1 bg-white/5 border border-white/5 rounded-xl p-2 font-mono">
+                            <div class="flex justify-between text-[8px] text-slate-400 mb-1">
+                                <span id="training-status-text">Recording...</span>
+                                <span id="training-percent-text">0%</span>
+                            </div>
+                            <div class="w-full bg-[#060a15] rounded-full h-1 overflow-hidden">
+                                <div id="training-progress-bar" class="bg-panel-sage h-1 transition-all duration-100" style="width: 0%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Column: Interactive Chat & System Logs -->
+        <section class="w-[55%] flex flex-col gap-5 h-full">
+            <!-- Dialogue Console -->
+            <div class="flex-1 hud-panel rounded-3xl p-4.5 flex flex-col overflow-hidden min-h-0">
+                <div class="cyber-corners"></div>
+                <h2 class="text-xs font-semibold text-slate-200 flex items-center gap-2 mb-3.5 border-b border-white/5 pb-2.5 uppercase tracking-wider font-mono">
+                    <i class="fa-solid fa-messages text-panel-cyan animate-pulse"></i> Cognitive Dialogue Console
+                </h2>
+                
+                <!-- Message history scroll region -->
+                <div id="chat-messages" class="flex-1 overflow-y-auto space-y-4 mb-4 pr-1.5 flex flex-col min-h-0 text-xs">
+                    <!-- Initial Welcome -->
+                    <div class="chat-bubble-animate self-start bg-slate-900/50 border border-white/5 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] flex flex-col gap-2 shadow-lg">
+                        <div class="flex items-center gap-2.5 text-[9px] text-panel-cyan font-bold uppercase tracking-wider font-mono">
+                            <span class="h-1.5 w-1.5 rounded-full bg-panel-cyan animate-pulse"></span>
+                            <span>System Core</span>
+                        </div>
+                        <p class="text-slate-300 leading-relaxed font-sans font-medium">Neural interface initialized. The console is monitoring your inputs. Speak aloud or utilize the manual override channels below to interact.</p>
+                        <span class="text-[8px] text-slate-500 font-bold uppercase font-mono text-right mt-1">Status: Standby</span>
+                    </div>
+                </div>
+
+                <!-- Input Console Panel -->
+                <div class="flex flex-col gap-3 shrink-0 border-t border-white/5 pt-3">
+                    
+                    <!-- Command Override Channel -->
+                    <div class="flex gap-2">
+                        <div class="relative flex-1 group">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 group-focus-within:text-panel-champagne transition-colors">
+                                <i class="fa-solid fa-terminal text-[10px]"></i>
+                            </span>
+                            <input type="text" id="command-input" placeholder="Type assistant query or action directive..." class="w-full bg-[#060a15] border border-white/5 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-panel-champagne/45 focus:ring-1 focus:ring-panel-champagne/10 transition-all font-mono">
+                        </div>
+                        <button onclick="sendCommand()" class="bg-panel-champagne/10 hover:bg-panel-champagne/20 text-panel-champagne border border-panel-champagne/30 text-xs px-4 py-2.5 rounded-xl transition-all duration-300 font-semibold uppercase tracking-wider font-mono shrink-0">
+                            Send
+                        </button>
+                        <button onclick="analyzeFeed()" class="bg-panel-cyan/10 hover:bg-panel-cyan/20 text-panel-cyan border border-panel-cyan/30 text-xs px-4 py-2.5 rounded-xl transition-all duration-300 font-semibold uppercase tracking-wider font-mono shrink-0">
+                            Analyze Feed
+                        </button>
+                    </div>
+
+                    <!-- TTS Speaker Output Override -->
+                    <div class="flex gap-2">
+                        <div class="relative flex-1 group">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500 group-focus-within:text-panel-lavender transition-colors">
+                                <i class="fa-solid fa-volume-high text-[10px]"></i>
+                            </span>
+                            <input type="text" id="speak-input" placeholder="Type text to synthesize directly through speaker output..." class="w-full bg-[#060a15] border border-white/5 rounded-xl pl-9 pr-3 py-2.5 text-xs font-medium text-slate-200 placeholder-slate-600 focus:outline-none focus:border-panel-lavender/45 focus:ring-1 focus:ring-panel-lavender/10 transition-all font-mono">
+                        </div>
+                        <button onclick="sendSpeakText()" class="bg-panel-lavender/10 hover:bg-panel-lavender/20 text-panel-lavender border border-panel-lavender/30 text-xs px-4 py-2.5 rounded-xl transition-all duration-300 font-semibold uppercase tracking-wider font-mono shrink-0">
+                            Speak
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal Logger -->
+            <div class="h-44 hud-panel hud-panel-lavender rounded-3xl p-4 flex flex-col overflow-hidden shrink-0 relative">
+                <div class="cyber-corners"></div>
+                <div class="flex items-center justify-between mb-2 pb-1.5 border-b border-white/5">
+                    <span class="text-xs font-semibold text-slate-200 uppercase tracking-wider font-mono"><i class="fa-solid fa-list-check text-panel-lavender mr-1"></i> Core Operational Event Stream</span>
+                    <button onclick="clearLogs()" class="text-[9px] text-slate-400 hover:text-white uppercase tracking-widest flex items-center gap-1 font-mono"><i class="fa-solid fa-trash-can text-[8px]"></i> Clear</button>
+                </div>
+                
+                <div id="logs-container" class="flex-1 overflow-y-auto font-mono text-[9px] leading-relaxed text-slate-500 p-1 space-y-1.5 select-text">
+                    <!-- Appended dynamically -->
+                </div>
+            </div>
+        </section>
+        
+    </main>
+
+    <!-- JS Client Logic -->
+    <script>
+        // DOM Elements
+        const chatMessages = document.getElementById('chat-messages');
+        const speakInput = document.getElementById('speak-input');
+        const commandInput = document.getElementById('command-input');
+        const logsContainer = document.getElementById('logs-container');
+        const usersGrid = document.getElementById('users-grid');
+        const currentTime = document.getElementById('current-time');
+        const videoStream = document.getElementById('video-stream');
+        const camPlaceholder = document.getElementById('cam-placeholder');
+        const scannerLine = document.getElementById('scanner-line');
+        const voiceVisualizer = document.getElementById('voice-visualizer');
+        
+        // Status indicators
+        const camBadge = document.getElementById('cam-badge');
+        const camDot = document.getElementById('cam-dot');
+        const camText = document.getElementById('cam-text');
+        
+        const micBadge = document.getElementById('mic-badge');
+        const micDot = document.getElementById('mic-dot');
+        const micText = document.getElementById('mic-text');
+        
+        const actionBadge = document.getElementById('action-badge');
+        const actionDot = document.getElementById('action-dot');
+        const actionText = document.getElementById('action-text');
+        
+        const visionModeBadge = document.getElementById('vision-mode-badge');
+
+        // Dynamic Telemetry HUD Elements
+        const telemetryMood = document.getElementById('telemetry-mood');
+        const telemetryAction = document.getElementById('telemetry-action');
+
+        // Particle background canvas logic
+        const backgroundCanvas = document.getElementById('nexus-canvas');
+        const bgCtx = backgroundCanvas.getContext('2d');
+        let particles = [];
+        let mouseX = null;
+        let mouseY = null;
+
+        function resizeBackgroundCanvas() {
+            backgroundCanvas.width = window.innerWidth;
+            backgroundCanvas.height = window.innerHeight;
+        }
+
+        window.addEventListener('resize', resizeBackgroundCanvas);
+        resizeBackgroundCanvas();
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+            reset() {
+                this.x = Math.random() * backgroundCanvas.width;
+                this.y = Math.random() * backgroundCanvas.height;
+                this.vx = (Math.random() - 0.5) * 0.3;
+                this.vy = (Math.random() - 0.5) * 0.3;
+                this.radius = Math.random() * 2 + 0.8;
+                this.color = `rgba(6, 182, 212, ${Math.random() * 0.2 + 0.1})`;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > backgroundCanvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > backgroundCanvas.height) this.vy *= -1;
+
+                if (mouseX !== null && mouseY !== null) {
+                    const dx = mouseX - this.x;
+                    const dy = mouseY - this.y;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist < 100) {
+                        this.x -= dx * 0.01;
+                        this.y -= dy * 0.01;
+                    }
+                }
+            }
+            draw() {
+                bgCtx.beginPath();
+                bgCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                bgCtx.fillStyle = this.color;
+                bgCtx.fill();
+            }
+        }
+
+        for (let i = 0; i < 50; i++) {
+            particles.push(new Particle());
+        }
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        window.addEventListener('mouseleave', () => {
+            mouseX = null;
+            mouseY = null;
+        });
+
+        function animateBackground() {
+            bgCtx.clearRect(0, 0, backgroundCanvas.width, backgroundCanvas.height);
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw link lines between close nodes
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.hypot(dx, dy);
+                    if (dist < 80) {
+                        const alpha = (1 - dist / 80) * 0.08;
+                        bgCtx.strokeStyle = `rgba(6, 182, 212, ${alpha})`;
+                        bgCtx.lineWidth = 0.5;
+                        bgCtx.beginPath();
+                        bgCtx.moveTo(particles[i].x, particles[i].y);
+                        bgCtx.lineTo(particles[j].x, particles[j].y);
+                        bgCtx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateBackground);
+        }
+        animateBackground();
+
+
+        // Fluid voice wave visualizer (Canvas based)
+        const voiceCanvas = document.getElementById('voice-wave');
+        let wavePhase = 0;
+
+        function drawVoiceWave() {
+            requestAnimationFrame(drawVoiceWave);
+            if (!voiceCanvas || voiceVisualizer.classList.contains('hidden')) return;
+            
+            const ctx = voiceCanvas.getContext('2d');
+            const w = voiceCanvas.width;
+            const h = voiceCanvas.height;
+            ctx.clearRect(0, 0, w, h);
+            
+            wavePhase += 0.07;
+            
+            // Multilayer fluid sine waves
+            const waves = [
+                { color: 'rgba(6, 182, 212, 0.45)', freq: 0.05, amp: 8, speed: 0.05 },
+                { color: 'rgba(168, 85, 247, 0.3)', freq: 0.035, amp: 11, speed: -0.03 },
+                { color: 'rgba(229, 184, 138, 0.2)', freq: 0.065, amp: 6, speed: 0.07 }
+            ];
+            
+            waves.forEach((wv) => {
+                ctx.beginPath();
+                ctx.strokeStyle = wv.color;
+                ctx.lineWidth = 1.5;
+                ctx.moveTo(0, h / 2);
+                
+                for (let x = 0; x < w; x++) {
+                    // Envelope function limits wave amplitude at boundary edges
+                    const envelope = Math.sin((x / w) * Math.PI);
+                    const y = h / 2 + Math.sin(x * wv.freq + wavePhase * (wv.speed > 0 ? 1 : -1) + (wv.speed * 10)) * wv.amp * envelope;
+                    ctx.lineTo(x, y);
+                }
+                ctx.stroke();
+            });
+        }
+        
+        // Start running wave loop
+        drawVoiceWave();
+
+
+        // Fluctuating Mock Telemetry variables
+        function updateMockTelemetry() {
+            const cpuEl = document.getElementById('metric-cpu');
+            const tempEl = document.getElementById('metric-temp');
+            const ramEl = document.getElementById('metric-ram');
+            const telemetryLat = document.getElementById('telemetry-latency');
+            
+            if (cpuEl) {
+                const currentCpu = parseInt(cpuEl.innerText) || 38;
+                const nextCpu = Math.min(Math.max(currentCpu + Math.floor((Math.random() - 0.5) * 8), 10), 90);
+                cpuEl.innerText = nextCpu + '%';
+            }
+            if (tempEl) {
+                const currentTemp = parseFloat(tempEl.innerText) || 42.5;
+                const nextTemp = Math.min(Math.max(currentTemp + (Math.random() - 0.5) * 0.6, 35.0), 62.0);
+                tempEl.innerText = nextTemp.toFixed(1) + '°C';
+            }
+            if (ramEl) {
+                const currentRam = parseInt(ramEl.innerText) || 138;
+                const nextRam = Math.min(Math.max(currentRam + Math.floor((Math.random() - 0.5) * 4), 130), 160);
+                ramEl.innerText = nextRam + 'MB';
+            }
+            if (telemetryLat) {
+                const nextLat = Math.floor(Math.random() * 15) + 40;
+                telemetryLat.innerText = nextLat + 'ms';
+            }
+        }
+        setInterval(updateMockTelemetry, 1500);
+
+
+        // Clock
+        function updateClock() {
+            const now = new Date();
+            currentTime.innerText = now.toTimeString().split(' ')[0];
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        let camActiveState = null;
+
+        // Handle webcam placeholder if server fails
+        function handleStreamError() {
+            if (videoStream) {
+                videoStream.onerror = null;
+            }
+            updateCamStatus(false);
+        }
+
+        // Set Camera Status UI
+        function updateCamStatus(active) {
+            if (camActiveState === active) return;
+            camActiveState = active;
+
+            if (active) {
+                if (videoStream) {
+                    videoStream.onerror = handleStreamError;
+                    videoStream.src = "/video_feed?t=" + Date.now();
+                    videoStream.classList.remove('hidden');
+                }
+                camBadge.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-panel-cyan/10 border border-panel-cyan/20 text-panel-cyan font-mono shadow-sm shadow-panel-cyan/5";
+                camDot.className = "h-1.5 w-1.5 rounded-full bg-panel-cyan animate-pulse";
+                camText.innerText = "Camera Active";
+                if (camPlaceholder) camPlaceholder.classList.add('hidden');
+                if (scannerLine) scannerLine.classList.remove('hidden');
+            } else {
+                if (videoStream) {
+                    videoStream.onerror = null;
+                    videoStream.classList.add('hidden');
+                }
+                camBadge.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-red-500/10 border border-red-500/20 text-red-400 font-mono shadow-sm shadow-red-500/5";
+                camDot.className = "h-1.5 w-1.5 rounded-full bg-red-400";
+                camText.innerText = "Camera Offline";
+                if (camPlaceholder) camPlaceholder.classList.remove('hidden');
+                if (scannerLine) scannerLine.classList.add('hidden');
+            }
+        }
+
+        // Set Microphone Status UI
+        function updateMicStatus(status, infoText) {
+            if (status === 'listening' || status === 'active_listening') {
+                micBadge.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-panel-cyan/10 border border-panel-cyan/20 text-panel-cyan font-mono shadow-sm shadow-panel-cyan/5";
+                micDot.className = "h-1.5 w-1.5 rounded-full bg-panel-cyan animate-pulse";
+                micText.innerText = "Mic Active";
+                if (voiceVisualizer) voiceVisualizer.classList.remove('hidden');
+            } else if (status === 'calibrating') {
+                micBadge.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-panel-lavender/10 border border-panel-lavender/20 text-panel-lavender font-mono shadow-sm shadow-panel-lavender/5";
+                micDot.className = "h-1.5 w-1.5 rounded-full bg-panel-lavender animate-pulse";
+                micText.innerText = "Mic Tuning";
+                if (voiceVisualizer) voiceVisualizer.classList.remove('hidden');
+            } else {
+                micBadge.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-white/5 border border-white/5 text-slate-500 font-mono";
+                micDot.className = "h-1.5 w-1.5 rounded-full bg-slate-500";
+                micText.innerText = "Mic Standby";
+                if (voiceVisualizer) voiceVisualizer.classList.add('hidden');
+            }
+        }
+
+        // Append to Log Window
+        function appendLog(type, text) {
+            const timeStr = new Date().toLocaleTimeString();
+            const logItem = document.createElement('div');
+            logItem.className = "flex items-start gap-1.5 text-[9px] font-mono border-b border-white/[0.01] pb-0.5";
+            
+            let typeColor = "text-slate-600";
+            if (type === "INFO") typeColor = "text-panel-champagne font-bold";
+            if (type === "DETECT") typeColor = "text-panel-cyan font-bold";
+            if (type === "GREET") typeColor = "text-panel-lavender font-bold";
+            if (type === "ERROR") typeColor = "text-red-400 font-bold animate-pulse";
+            
+            logItem.innerHTML = `<span class="text-slate-600 shrink-0">[${timeStr}]</span> <span class="${typeColor} shrink-0 uppercase">${type}</span> <span class="text-slate-400 font-sans break-all">${text}</span>`;
+            logsContainer.appendChild(logItem);
+            logsContainer.scrollTop = logsContainer.scrollHeight;
+        }
+
+        let lastActionState = null;
+        function updateActionStatus(action) {
+            if (lastActionState === action) return;
+            lastActionState = action;
+            
+            actionText.innerText = "Activity: " + action;
+            if (telemetryAction) telemetryAction.innerText = action;
+            
+            if (action !== 'Neutral' && action !== 'offline') {
+                actionBadge.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-panel-sage/10 border border-panel-sage/20 text-panel-sage font-mono shadow-sm shadow-panel-sage/5";
+                actionDot.className = "h-1.5 w-1.5 rounded-full bg-panel-sage animate-pulse";
+            } else {
+                actionBadge.className = "flex items-center gap-2 px-3.5 py-1.5 rounded-full text-[10px] font-semibold bg-white/5 border border-white/5 text-slate-500 font-mono";
+                actionDot.className = "h-1.5 w-1.5 rounded-full bg-slate-500";
+            }
+            appendLog("INFO", `User activity detected as: ${action}`);
+        }
+
+        async function startActionTraining() {
+            const select = document.getElementById('train-action-select');
+            const action = select.value;
+            const btn = document.getElementById('train-action-btn');
+            const progressContainer = document.getElementById('training-progress-container');
+            const progressBar = document.getElementById('training-progress-bar');
+            const statusText = document.getElementById('training-status-text');
+            const percentText = document.getElementById('training-percent-text');
+            
+            btn.disabled = true;
+            btn.className = "bg-white/5 text-slate-600 border border-white/5 text-xs px-3.5 py-1.5 rounded-xl cursor-not-allowed font-mono font-bold uppercase tracking-wider";
+            progressContainer.classList.remove('hidden');
+            progressBar.style.width = '0%';
+            percentText.innerText = '0%';
+            statusText.innerText = `Calibrating '${action}'...`;
+            
+            appendLog("INFO", `Initiating classifier calibration for: '${action}'`);
+            
+            try {
+                const res = await fetch('/api/train', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: action })
+                });
+                
+                if (!res.ok) {
+                    const errData = await res.json();
+                    appendLog("ERROR", errData.message || "Failed to start training");
+                    resetTrainingUI();
+                }
+            } catch (e) {
+                appendLog("ERROR", `Training trigger failed: ${e}`);
+                resetTrainingUI();
+            }
+        }
+        
+        function resetTrainingUI() {
+            const btn = document.getElementById('train-action-btn');
+            const progressContainer = document.getElementById('training-progress-container');
+            btn.disabled = false;
+            btn.className = "bg-panel-sage/10 hover:bg-panel-sage/20 text-panel-sage border border-panel-sage/30 text-xs px-3.5 py-1.5 rounded-xl transition-all duration-300 font-semibold uppercase tracking-wider font-mono";
+            progressContainer.classList.add('hidden');
+        }
+
+        function clearLogs() {
+            logsContainer.innerHTML = '';
+        }
+
+        // Add Chat Bubble
+        function addChatBubble(sender, text) {
+            // Remove previous typing indicator if it exists
+            const typingBubble = document.getElementById('chat-typing-indicator');
+            if (typingBubble) {
+                typingBubble.remove();
+            }
+
+            const bubble = document.createElement('div');
+            const isRobot = (sender === 'Robot');
+            
+            const senderTag = isRobot ? "Cognitive Core" : "User Override";
+            const borderCol = isRobot 
+                ? "bg-[#0c1224]/75 border border-panel-cyan/15 shadow-md shadow-panel-cyan/[0.02]" 
+                : "bg-panel-champagne/10 border border-panel-champagne/20 self-end shadow-md shadow-panel-champagne/[0.02]";
+            const labelCol = isRobot ? "text-panel-cyan" : "text-panel-champagne";
+            const alignment = isRobot ? "self-start" : "self-end";
+            const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            
+            const roundedClass = isRobot ? "rounded-2xl rounded-tl-none" : "rounded-2xl rounded-tr-none";
+
+            bubble.className = `chat-bubble-animate ${alignment} ${borderCol} ${roundedClass} p-3.5 max-w-[85%] flex flex-col gap-1.5 text-xs`;
+            bubble.innerHTML = `
+                <div class="flex items-center gap-3 text-[9px] ${labelCol} font-bold font-mono">
+                    <span class="uppercase tracking-widest">${senderTag}</span>
+                    <span class="text-slate-600 font-normal">${timestamp}</span>
+                </div>
+                <p class="text-slate-300 leading-relaxed font-sans font-medium">${text}</p>
+            `;
+            
+            chatMessages.appendChild(bubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Add Typing Indicator
+        function addTypingIndicator() {
+            if (document.getElementById('chat-typing-indicator')) return;
+
+            const bubble = document.createElement('div');
+            bubble.id = 'chat-typing-indicator';
+            bubble.className = "chat-bubble-animate self-start bg-[#0c1224]/50 border border-white/5 rounded-2xl rounded-tl-none p-3.5 max-w-[85%] flex items-center gap-2 text-xs";
+            bubble.innerHTML = `
+                <span class="text-[9px] font-mono text-panel-cyan uppercase font-bold tracking-widest mr-1">Core processing</span>
+                <div class="flex gap-1 items-center h-2">
+                    <span class="h-1.5 w-1.5 rounded-full bg-panel-cyan animate-bounce" style="animation-delay: 0.1s"></span>
+                    <span class="h-1.5 w-1.5 rounded-full bg-panel-cyan animate-bounce" style="animation-delay: 0.2s"></span>
+                    <span class="h-1.5 w-1.5 rounded-full bg-panel-cyan animate-bounce" style="animation-delay: 0.3s"></span>
+                </div>
+            `;
+            chatMessages.appendChild(bubble);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Fetch registered directory users
+        async function loadUsers() {
+            try {
+                const res = await fetch('/api/users');
+                if (res.ok) {
+                    const data = await res.json();
+                    const users = data.users || [];
+                    usersGrid.innerHTML = '';
+                    if (users.length === 0) {
+                        usersGrid.innerHTML = `<div class="text-[10px] text-slate-500 text-center py-4 font-mono">No users registered in database.</div>`;
+                        return;
+                    }
+                    users.forEach(name => {
+                        const row = document.createElement('div');
+                        row.className = "flex items-center justify-between p-2 border border-white/[0.02] bg-[#080d19]/45 hover:bg-[#0c1426]/90 transition-all duration-300 rounded-2xl";
+                        
+                        const initial = name.trim().charAt(0).toUpperCase();
+                        row.innerHTML = `
+                            <div class="flex items-center gap-2.5 truncate">
+                                <div class="h-6 w-6 rounded-xl bg-panel-champagne/10 text-panel-champagne flex items-center justify-center font-bold text-[10px] shrink-0 font-mono border border-panel-champagne/20 shadow-sm shadow-panel-champagne/5">
+                                    ${initial}
+                                </div>
+                                <span class="truncate text-[11px] text-slate-300 font-semibold font-mono tracking-wide">${name}</span>
+                            </div>
+                            <button onclick="manualGreet('${name}')" class="text-[9px] bg-panel-champagne/10 hover:bg-panel-champagne/25 hover:scale-[1.03] text-panel-champagne px-3 py-1.5 rounded-xl transition-all duration-300 font-semibold border border-panel-champagne/20 uppercase tracking-widest font-mono">
+                                Greet
+                            </button>
+                        `;
+                        usersGrid.appendChild(row);
+                    });
+                }
+            } catch (err) {
+                console.error("Failed to load users list: ", err);
+                usersGrid.innerHTML = `<div class="text-[10px] text-red-400 text-center py-4 font-mono uppercase tracking-widest">Database connection error</div>`;
+            }
+        }
+
+        // Trigger manual greeting
+        async function manualGreet(name) {
+            appendLog("INFO", `Sending manual greet command for: '${name}'`);
+            try {
+                const res = await fetch('/api/greet', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name })
+                });
+                if (!res.ok) appendLog("ERROR", "Failed to trigger greet API");
+            } catch(e) {
+                appendLog("ERROR", `Greet override error: ${e}`);
+            }
+        }
+
+        // Send Custom Type-to-Speak Text
+        async function sendSpeakText() {
+            const text = speakInput.value.trim();
+            if (!text) return;
+            
+            appendLog("INFO", `Instructing audio engine to output speech: "${text}"`);
+            speakInput.value = '';
+            
+            try {
+                const res = await fetch('/api/speak', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text })
+                });
+                if (!res.ok) appendLog("ERROR", "Speak API failed to respond");
+            } catch(e) {
+                appendLog("ERROR", `Speech override failed: ${e}`);
+            }
+        }
+
+        // Send Textual Command Mode
+        async function sendCommand() {
+            const command = commandInput.value.trim();
+            if (!command) return;
+            
+            addChatBubble('You', command);
+            addTypingIndicator();
+            commandInput.value = '';
+            
+            try {
+                const res = await fetch('/api/command', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: command })
+                });
+                if (!res.ok) {
+                    appendLog("ERROR", "Command API failed to respond");
+                    const typingIndicator = document.getElementById('chat-typing-indicator');
+                    if (typingIndicator) typingIndicator.remove();
+                }
+            } catch(e) {
+                appendLog("ERROR", `Command post request failed: ${e}`);
+                const typingIndicator = document.getElementById('chat-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+            }
+        }
+
+        // Trigger multimodal feed analysis
+        async function analyzeFeed() {
+            const command = "Analyze the camera feed and describe what you see right now.";
+            addChatBubble('You', command);
+            addTypingIndicator();
+            appendLog("INFO", "Requesting visual telemetry analysis...");
+            try {
+                const res = await fetch('/api/command', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ command: command })
+                });
+                if (!res.ok) {
+                    appendLog("ERROR", "Command API failed to respond");
+                    const typingIndicator = document.getElementById('chat-typing-indicator');
+                    if (typingIndicator) typingIndicator.remove();
+                }
+            } catch(e) {
+                appendLog("ERROR", `Visual scene analysis failed: ${e}`);
+                const typingIndicator = document.getElementById('chat-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+            }
+        }
+
+        // Trigger on Enter key
+        speakInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendSpeakText();
+        });
+        commandInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') sendCommand();
+        });
+
+        // Initialize Server-Sent Events (SSE) Stream
+        function initSSE() {
+            appendLog("INFO", "Opening EventStream connection to neural backend...");
+            const sse = new EventSource('/api/events');
+            
+            sse.addEventListener('connect', (e) => {
+                const eventData = JSON.parse(e.data);
+                appendLog("INFO", "SSE event stream broadcast connection established.");
+                updateCamStatus(true);
+            });
+            
+            sse.onmessage = (e) => {
+                const event = JSON.parse(e.data);
+                if (event.type === 'ping') return;
+                
+                const time = new Date(event.timestamp * 1000).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit', second:'2-digit'});
+                
+                switch(event.type) {
+                    case 'status':
+                        const statusData = event.data;
+                        updateMicStatus(statusData.mic_status, statusData.info);
+                        appendLog("INFO", `Core state transition: ${statusData.info}`);
+                        break;
+                        
+                    case 'face_detected':
+                        const detectData = event.data;
+                        if (telemetryMood) telemetryMood.innerText = detectData.mood;
+                        appendLog("DETECT", `ID matched user "${detectData.name}" - Mood: ${detectData.mood} (Similarity: ${Math.round(detectData.confidence * 100)}%)`);
+                        break;
+                        
+                    case 'action_detected':
+                        const actionData = event.data;
+                        updateActionStatus(actionData.action);
+                        break;
+                        
+                    case 'greeting':
+                        const greetData = event.data;
+                        addChatBubble('Robot', greetData.text);
+                        appendLog("GREET", `Synthesized voice greeting: "${greetData.text}"`);
+                        break;
+                        
+                    case 'voice_input':
+                        const inputData = event.data;
+                        addChatBubble('You', inputData.text);
+                        addTypingIndicator();
+                        appendLog("INFO", `Incoming vocal capture: "${inputData.text}"`);
+                        break;
+                        
+                    case 'response':
+                        const resData = event.data;
+                        addChatBubble('Robot', resData.text);
+                        appendLog("INFO", `Assistant response generated: "${resData.text}"`);
+                        break;
+                        
+                    case 'voice_alert':
+                        const alertData = event.data;
+                        appendLog("INFO", `Wake event: ${alertData.info} "${alertData.text}"`);
+                        break;
+                        
+                    case 'error':
+                        const errData = event.data;
+                        appendLog("ERROR", errData.info);
+                        break;
+                        
+                    case 'training_progress':
+                        const progData = event.data;
+                        const percent = Math.round((progData.count / progData.total) * 100);
+                        document.getElementById('training-status-text').innerText = `Recording '${progData.action}' (${progData.count}/${progData.total})`;
+                        document.getElementById('training-percent-text').innerText = `${percent}%`;
+                        document.getElementById('training-progress-bar').style.width = `${percent}%`;
+                        break;
+                        
+                    case 'training_complete':
+                        const compData = event.data;
+                        appendLog("INFO", `Visual classifier training complete: '${compData.action}'`);
+                        document.getElementById('training-status-text').innerText = `Tuning completed!`;
+                        document.getElementById('training-percent-text').innerText = `100%`;
+                        document.getElementById('training-progress-bar').style.width = `100%`;
+                        setTimeout(resetTrainingUI, 2000);
+                        break;
+                }
+            };
+            
+            sse.onerror = (err) => {
+                console.error("SSE stream errored:", err);
+                appendLog("ERROR", "SSE broadcast closed. Retrying link connection...");
+                updateCamStatus(false);
+                updateMicStatus('offline', 'Mic Offline');
+                
+                // Clear any typing state
+                const typingIndicator = document.getElementById('chat-typing-indicator');
+                if (typingIndicator) typingIndicator.remove();
+            };
+        }
+
+        // Fetch Status and configure Mode Badges
+        async function fetchSystemStatus() {
+            try {
+                const res = await fetch('/api/status');
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data.single_person_mode) {
+                        visionModeBadge.classList.remove('hidden');
+                    } else {
+                        visionModeBadge.classList.add('hidden');
+                    }
+                    updateCamStatus(data.camera_active);
+                }
+            } catch(e) {
+                console.warn("Could not retrieve system configuration status.", e);
+            }
+        }
+
+        // Entry Boot
+        window.addEventListener('DOMContentLoaded', () => {
+            loadUsers();
+            initSSE();
+            fetchSystemStatus();
+            setInterval(fetchSystemStatus, 5000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{
+  "owner": {
+    "name": "Janvi Shah",
+    "role": "Software Developer & Engineer",
+    "assistant_name": "Personal Robot Assistant",
+    "home_location": "Home Office",
+    "preferences": {
+      "coffee": "Cappuccino with a dash of cinnamon",
+      "work_hours": "9:00 AM to 6:00 PM",
+      "hobbies": ["Coding", "Exploring AI models", "Reading tech articles"]
+    }
+  },
+  "daily_schedule": [
+    {"time": "09:00 AM", "activity": "Start work and review tasks"},
+    {"time": "01:00 PM", "activity": "Lunch break and light reading"},
+    {"time": "03:30 PM", "activity": "Short coffee break"},
+    {"time": "06:00 PM", "activity": "End of work and evening walk"}
+  ],
+  "faqs": [
+    {
+      "question": "who are you",
+      "answer": "I am your personal robot assistant, here to assist you with tasks, scheduling, and Q&A."
+    },
+    {
+      "question": "who is your owner",
+      "answer": "My owner is Janvi Shah. I am configured exclusively to serve and assist her."
+    },
+    {
+      "question": "what is the schedule today",
+      "answer": "Your schedule is: 9:00 AM Start work, 1:00 PM Lunch break, 3:30 PM Coffee break, and 6:00 PM Evening walk."
+    },
+    {
+      "question": "what do you do",
+      "answer": "I monitor your visual environment, recognize your expressions, unlock when you are present, and run voice commands to assist you."
+    }
+  ]
+}

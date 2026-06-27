@@ -1,0 +1,27 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local environments / API Secrets
+.env
+.env.local
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Datasets and large archives
+*.zip
+*.rar
+data/kaggle_dataset/
+
+# Deep learning models & generated files
+data/*.onnx
+data/*.yml
+data/faces/
+data/face_embeddings.json
+
+# Logs
+*.log
