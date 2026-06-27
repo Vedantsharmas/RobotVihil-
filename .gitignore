@@ -18,10 +18,8 @@ env/
 data/kaggle_dataset/
 
 # Deep learning models & generated files
-data/*.onnx
 data/*.yml
-data/faces/
-data/face_embeddings.json
+
 
 # Logs
 *.log
